@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 05, 2022 at 12:04 AM
+-- Generation Time: Jul 05, 2022 at 05:54 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -67,28 +67,6 @@ CREATE TABLE `directors` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `directs`
---
-
-CREATE TABLE `directs` (
-  `id_director` int(11) NOT NULL,
-  `id_series` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `has`
---
-
-CREATE TABLE `has` (
-  `id_platform` int(11) NOT NULL,
-  `id_series` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `languages`
 --
 
@@ -128,7 +106,9 @@ CREATE TABLE `platforms` (
 
 CREATE TABLE `series` (
   `id` int(11) NOT NULL,
-  `title` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `title` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `id_platform` int(11) NOT NULL,
+  `id_director` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -166,20 +146,6 @@ ALTER TABLE `directors`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `directs`
---
-ALTER TABLE `directs`
-  ADD PRIMARY KEY (`id_director`,`id_series`),
-  ADD KEY `directs_fk2` (`id_series`);
-
---
--- Indexes for table `has`
---
-ALTER TABLE `has`
-  ADD PRIMARY KEY (`id_platform`,`id_series`),
-  ADD KEY `has_fk2` (`id_series`);
-
---
 -- Indexes for table `languages`
 --
 ALTER TABLE `languages`
@@ -202,7 +168,9 @@ ALTER TABLE `platforms`
 -- Indexes for table `series`
 --
 ALTER TABLE `series`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `series_fk1` (`id_platform`),
+  ADD KEY `series_fk2` (`id_director`);
 
 --
 -- Indexes for table `subtitles_lang`
@@ -257,25 +225,18 @@ ALTER TABLE `audio_lang`
   ADD CONSTRAINT `audio_lang_fk2` FOREIGN KEY (`id_series`) REFERENCES `series` (`id`);
 
 --
--- Constraints for table `directs`
---
-ALTER TABLE `directs`
-  ADD CONSTRAINT `directs_fk1` FOREIGN KEY (`id_director`) REFERENCES `directors` (`id`),
-  ADD CONSTRAINT `directs_fk2` FOREIGN KEY (`id_series`) REFERENCES `series` (`id`);
-
---
--- Constraints for table `has`
---
-ALTER TABLE `has`
-  ADD CONSTRAINT `has_fk1` FOREIGN KEY (`id_platform`) REFERENCES `platforms` (`id`),
-  ADD CONSTRAINT `has_fk2` FOREIGN KEY (`id_series`) REFERENCES `series` (`id`);
-
---
 -- Constraints for table `performs`
 --
 ALTER TABLE `performs`
   ADD CONSTRAINT `performs_fk1` FOREIGN KEY (`id_actor`) REFERENCES `actors` (`id`),
   ADD CONSTRAINT `performs_fk2` FOREIGN KEY (`id_series`) REFERENCES `series` (`id`);
+
+--
+-- Constraints for table `series`
+--
+ALTER TABLE `series`
+  ADD CONSTRAINT `series_fk1` FOREIGN KEY (`id_platform`) REFERENCES `platforms` (`id`),
+  ADD CONSTRAINT `series_fk2` FOREIGN KEY (`id_director`) REFERENCES `directors` (`id`);
 
 --
 -- Constraints for table `subtitles_lang`
