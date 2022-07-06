@@ -37,5 +37,19 @@
         public function setName($name) {
             $this->name = $name;
         }
+
+        /**
+         * @return mixed
+         */
+        public function getISO() {
+            return $this->ISOcode;
+        }
+
+        /**
+         * @param mixed $id
+         */
+        public function setISO($code) {
+            $this->ISOcode = $code;
+        }
     }
 ?>
