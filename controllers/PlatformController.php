@@ -1,5 +1,5 @@
 <?php
-    require_once('../../models/Platform.php');
+    require_once('../models/Platform.php');
 
     function initConnectionDb() {
         $db_host = 'localhost';

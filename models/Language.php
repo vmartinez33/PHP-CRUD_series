@@ -46,7 +46,7 @@
         }
 
         /**
-         * @param mixed $id
+         * @param mixed $code
          */
         public function setISO($code) {
             $this->ISOcode = $code;
