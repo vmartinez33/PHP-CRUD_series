@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Listado de plataformas</h1>
+                    <h1>Listado de idiomas</h1>
                 </div>
                 <div class="col-6">
                     <a class="btn btn-primary" href="create.php">+ Crear idioma</a>
