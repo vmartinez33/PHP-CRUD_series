@@ -1,5 +1,5 @@
 <?php
-    require_once('../models/Actor.php');
+    require_once('../../models/Actor.php');
 
     function initConnectionDb() {
         $db_host = 'localhost';

@@ -1,5 +1,5 @@
 <?php
-    require_once('../models/Language.php');
+    require_once('../../models/Language.php');
 
     function initConnectionDb() {
         $db_host = 'localhost';
