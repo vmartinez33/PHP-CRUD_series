@@ -1,13 +1,7 @@
 <?php
+    require_once('../../header.php');
     require_once('../../controllers/ActorController.php');
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Crear actor</title>
-    </head>
     <body>
         <div class="container">
             <?php
@@ -47,7 +41,7 @@
                                     <label for="actorDNI" class="form-label">DNI</label>
                                     <input id="actorDNI" name="actorDNI" type="text" placeholder="Introduce el DNI del actor" class="form-control" required />
                                     <label for="actorBirthDate" class="form-label">Fecha de nacimiento</label>
-                                    <input id="actorBirthDate" name="actorBirthDate" type="text" placeholder="YYYY-MM-DD" class="form-control" required />
+                                    <input id="actorBirthDate" name="actorBirthDate" type="text" placeholder="dd/mm/yyyy" class="form-control" required />
                                     <label for="actorNationality" class="form-label">Nacionalidad</label>
                                     <input id="actorNationality" name="actorNationality" type="text" placeholder="Introduce la nacionalidad del actor" class="form-control" required />
                                 </div>
@@ -78,4 +72,6 @@
             ?>
         </div>
     </body>
-</html>
+    <?php
+    require_once('../../footer.php');
+?>

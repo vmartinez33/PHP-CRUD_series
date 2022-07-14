@@ -1,4 +1,5 @@
 <?php
+    require_once('../../header.php');
     require_once('../../controllers/LanguageController.php');
 ?>
 <!DOCTYPE html>
@@ -67,4 +68,6 @@
             </div>
         </div>
     </body>
-</html>
+<?php 
+    require_once('../../footer.php');
+?>

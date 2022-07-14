@@ -1,13 +1,8 @@
 <?php
+    require_once('../../header.php');
     require_once('../../controllers/LanguageController.php');
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Crear idioma</title>
-    </head>
     <body>
         <div class="container">
             <?php
@@ -65,4 +60,6 @@
             ?>
         </div>
     </body>
-</html>
+<?php 
+    require_once('../../footer.php');
+?>

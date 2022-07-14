@@ -1,29 +1,10 @@
 <?php
     require_once('../../models/Actor.php');
-
-    function initConnectionDb() {
-        $db_host = 'localhost';
-        $db_user = 'root';
-        $db_password = 'root';
-        $db_db = 'bibliotecaseries';
-
-        $mysqli = @new mysqli(
-            $db_host,
-            $db_user,
-            $db_password,
-            $db_db
-        );
-
-        if ($mysqli->connect_error) {
-            die('Error: '.$mysqli->connect_error);
-        }
-
-        return $mysqli;
-    }
+    require_once('../../utils/conexionBBDD.php');
 
     function listActors() {
         $mysqli = initConnectionDb();
-        $actorList = $mysqli->query(query: "SELECT * FROM actors");
+        $actorList = $mysqli->query(query: "SELECT id, name, first_surname, second_surname, dni, DATE_FORMAT(birth_date, '%d/%m/%Y') as birth_date, nationality  FROM actors");
 
         $actorObjectArray = [];
         foreach ($actorList as $actorItem) {
@@ -40,7 +21,7 @@
 
         $actorCreated = false;
         //TODO: comprobar que no exista un actor con el mismo DNI.
-        if ($resultadoInsert = $mysqli->query(query: "INSERT INTO actors (name, first_surname, second_surname, dni, birth_date, nationality) values ('$actorName', '$actorFirstSurname', '$actorSecondSurname', '$actorDNI', '$actorBirthDate', '$actorNationality')")) {
+        if ($resultadoInsert = $mysqli->query(query: "INSERT INTO actors (name, first_surname, second_surname, dni, birth_date, nationality) values ('$actorName', '$actorFirstSurname', '$actorSecondSurname', '$actorDNI', STR_TO_DATE('$actorBirthDate', '%d/%m/%Y'), '$actorNationality')")) {
             $actorCreated = true;
         }   
         $mysqli->close();
@@ -53,7 +34,7 @@
 
         $actorEdited = false;
 
-        if ($resultadoUpdate = $mysqli->query(query: "UPDATE actors set name = '$actorName', first_surname = '$actorFirstSurname', second_surname = '$actorSecondSurname', dni = '$actorDNI', birth_date = '$actorBirthDate', nationality = '$actorNationality' where id = $actorId")) {
+        if ($resultadoUpdate = $mysqli->query(query: "UPDATE actors set name = '$actorName', first_surname = '$actorFirstSurname', second_surname = '$actorSecondSurname', dni = '$actorDNI', birth_date = STR_TO_DATE('$actorBirthDate', '%d/%m/%Y'), nationality = '$actorNationality' where id = $actorId")) {
             $actorEdited = true;
         }
 

@@ -1,25 +1,19 @@
 <?php
     require_once('../../header.php');
-    require_once('../../controllers/LanguageController.php');
+    require_once('../controllers/DirectorController.php');
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Borrar idioma</title>
-    </head>
     <body>
         <div class="container">
             <?php
-                $idLanguage = $_POST['languageId'];
-                $languageDeleted = deleteLanguage($idLanguage);
+                $idDirector = $_POST['directorId'];
+                $directorDeleted = deleteDirector($idDirector);
 
-                if ($languageDeleted) {
+                if ($directorDeleted) {
             ?>
                     <div class="row">
                         <div class="alert alert-success" role="alert">
-                            Idioma borrado correctamente.<br><a href="list.php">Volver al listado de idiomas.</a>
+                            Director borrado correctamente.<br><a href="list.php">Volver al listado de directores.</a>
                         </div>
                     </div>
             <?php
@@ -27,7 +21,7 @@
             ?>
                     <div class="row">
                         <div class="alert alert-danger" role="alert">
-                            El idioma no se ha borrado correctamente.<br><a href="list.php">Volver a intentarlo.</a>
+                            El director no se ha borrado correctamente.<br><a href="list.php">Volver a intentarlo.</a>
                         </div>
                     </div>
             <?php

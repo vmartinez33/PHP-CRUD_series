@@ -1,21 +1,21 @@
 <?php
     require_once('../../header.php');
-    require_once('../../controllers/ActorController.php');
+    require_once('../../controllers/DirectorController.php');
 ?>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Listado de actores</h1>
+                    <h1>Listado de directores</h1>
                 </div>
                 <div class="col-6">
-                    <a class="btn btn-primary" href="create.php">+ Crear actor</a>
+                    <a class="btn btn-primary" href="create.php">+ Crear directores</a>
                 </div>
                 <div class="col-12">
                     <?php
-                        $actorList = listActors();
+                        $directorList = listDirectors();
 
-                        if (count($actorList) > 0) {
+                        if (count($directorList) > 0) {
                     ?>
                             <table class="table">
                                 <thead>
@@ -30,22 +30,22 @@
                                 </thead>
                                 <tbody>
                     <?php
-                                    foreach ($actorList as $actor) {
+                                    foreach ($directorList as $director) {
                     ?>
                                         <tr>
-                                            <td><?php echo $actor->getId(); ?></td>
-                                            <td><?php echo $actor->getName(); ?></td>
-                                            <td><?php echo $actor->getFirstSurname(); ?></td>
-                                            <td><?php echo $actor->getSecondSurname(); ?></td>
-                                            <td><?php echo $actor->getDNI(); ?></td>
-                                            <td><?php echo $actor->getBirthDate(); ?></td>
-                                            <td><?php echo $actor->getNationality(); ?></td>
+                                            <td><?php echo $director->getId(); ?></td>
+                                            <td><?php echo $director->getName(); ?></td>
+                                            <td><?php echo $director->getFirstSurname(); ?></td>
+                                            <td><?php echo $director->getSecondSurname(); ?></td>
+                                            <td><?php echo $director->getDNI(); ?></td>
+                                            <td><?php echo $director->getBirthDate(); ?></td>
+                                            <td><?php echo $director->getNationality(); ?></td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a class="btn btn-success" href="edit.php?id=<?php echo $actor->getId(); ?>">Editar</a>
+                                                    <a class="btn btn-success" href="edit.php?id=<?php echo $director->getId(); ?>">Editar</a>
 
-                                                    <form name="delete_actor" action="delete.php" method="POST">
-                                                        <input type="hidden" name="actorId" value="<?php echo $actor->getId(); ?>" />
+                                                    <form name="delete_director" action="delete.php" method="POST">
+                                                        <input type="hidden" name="directorId" value="<?php echo $director->getId(); ?>" />
                                                         <button type="submit" class="btn btn-danger">Borrar</button>
                                                     </form>
                                                 </div>
@@ -60,7 +60,7 @@
                         } else {
                     ?>
                             <div class="alert alert-warning" role="alert">
-                                Aún no existen actores.
+                                Aún no existen directores.
                             </div>
                     <?php
                         }

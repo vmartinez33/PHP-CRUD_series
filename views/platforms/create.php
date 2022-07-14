@@ -1,14 +1,9 @@
 <?php
+    require_once('../../header.php');
     require_once('../../controllers/PlatformController.php');
+    
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Crear plataforma</title>
-    </head>
-    <body>
+
         <div class="container">
             <?php
                 $sendData = false;
@@ -27,7 +22,7 @@
                 if(!$sendData) {
             ?>
                     <div class="row">
-                        <div>
+                        <div style="text-align: center;">
                             <h1>Crear plataforma</h1>
                         </div>
                         <div class="col-12">
@@ -36,7 +31,10 @@
                                     <label for="plataformName" class="form-label">Nombre plataforma</label>
                                     <input id="platformName" name="platformName" type="text" placeholder="Introduce el nombre de la plataforma" class="form-control" required />
                                 </div>
+                                <br>
+                                <div style="text-align: center;">
                                 <input type="submit" value="Crear" class="btn btn-primary" name="createBtn"/>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -62,9 +60,9 @@
                 }
             ?>
         </div>
-    </body>
-</html>
-
+<?php
+    require_once('../../footer.php');
+?>
 
 
 

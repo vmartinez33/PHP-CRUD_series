@@ -2,6 +2,7 @@
     require_once('../../header.php');
     require_once('../../controllers/ActorController.php');
 ?>
+<!DOCTYPE html>
     <body>
         <div class="container">
             <?php
@@ -77,5 +78,5 @@
         </div>
     </body>
 <?php 
- require_once('../../footer.php');
+    require_once('../../footer.php');
 ?>
