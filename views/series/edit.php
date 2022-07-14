@@ -1,29 +1,29 @@
 <?php
     require_once('../../header.php');
+    require_once('../../controllers/PlatformController.php');
+    require_once('../../controllers/DirectorController.php');
     require_once('../../controllers/ActorController.php');
+    require_once('../../controllers/LanguageController.php');
+    require_once('../../controllers/SeriesController.php');
 ?>
 <!DOCTYPE html>
     <body>
         <div class="container">
             <?php
-                $idActor = $_GET['id'];
-                $actorObject = getActorData($idActor);
+                $idSeries = $_GET['id'];
+                $seriesObject = getSeriesData($idSeries);
 
                 $sendData = false;
-                $actorEdited = false;
+                $seriesEdited = false;
 
                 if (isset($_POST['editBtn'])) {
                     $sendData = true;
                 }
 
                 if($sendData) {
-                    $condition = isset($_POST['actorName']) && isset($_POST['actorFirstSurname']) && isset($_POST['actorSecondSurname']) && 
-                                 isset($_POST['actorDNI']) && isset($_POST['actorBirthDate']) && isset($_POST['actorNationality']);
+                    $condition = isset($_POST['seriesTitle']) && isset($_POST['seriesPlatformId']) && isset($_POST['seriesDirectorId']) && isset($_POST['seriesActors']) && isset($_POST['seriesAudioLanguages']) && isset($_POST['seriesSubtitlesLanguages']);
                     if($condition) {
-                        $actorEdited = updateActor(
-                            $_POST['actorId'], $_POST['actorName'], $_POST['actorFirstSurname'], $_POST['actorSecondSurname'], 
-                            $_POST['actorDNI'], $_POST['actorBirthDate'], $_POST['actorNationality']
-                        );
+                        $seriesEdited = true;
                     }
                 }
 
@@ -31,36 +31,93 @@
             ?>
                     <div class="row">
                         <div class="col-12">
-                            <h1>Editar actor</h1>
+                            <h1>Editar serie</h1>
                         </div>
                         <div class="col-12">
-                            <form name="create_actor" action="" method="POST">
+                        <form name="create_series" action="" method="POST">
                                 <div class="nb-3">
-                                    <label for="actorName" class="form-label">Nombre actor</label>
-                                    <input id="actorName" name="actorName" type="text" placeholder="Introduce el nombre del actor" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getName(); ?>"/>
-                                    <label for="actorFirstSurname" class="form-label">Primer apellido</label>
-                                    <input id="actorFirstSurname" name="actorFirstSurname" type="text" placeholder="Introduce el primer apellido del actor" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getFirstSurname(); ?>"/>
-                                    <label for="actorSecondSurname" class="form-label">Segundo apellido</label>
-                                    <input id="actorSecondSurname" name="actorSecondSurname" type="text" placeholder="Introduce el segundo apellido del actor" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getSecondSurname(); ?>"/>
-                                    <label for="actorDNI" class="form-label">DNI</label>
-                                    <input id="actorDNI" name="actorDNI" type="text" placeholder="Introduce el DNI del actor" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getDNI(); ?>"/>
-                                    <label for="actorBirthDate" class="form-label">Fecha de nacimiento</label>
-                                    <input id="actorBirthDate" name="actorBirthDate" type="text" placeholder="dd/mm/yyyy" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getBirthDate(); ?>"/>
-                                    <label for="actorNationality" class="form-label">Nacionalidad</label>
-                                    <input id="actorNationality" name="actorNationality" type="text" placeholder="Introduce la nacionalidad del actor" class="form-control" required value="<?php if(isset($actorObject)) echo $actorObject->getNationality(); ?>"/>
-                                    <input type="hidden" name="actorId" value="<?php echo $idActor; ?>"/>
+                                    <label for="seriesTitle" class="form-label">Título de la serie: </label>
+                                    <input id="seriesTitle" name="seriesTitle" type="text" placeholder="Introduce el nombre de la serie" class="form-control" required />
+                                    <br>
+                                    <label for="seriesPlatformName" class="form-label">Selecciona la plataforma: </label>
+                                    <br>
+                                    <select id="seriesPlatformId" name="seriesPlatformId" required>
+                                        <?php
+                                            $platformsList = listPlatforms();
+                                            
+                                            foreach ($platformsList as $platform) {
+                                        ?>
+                                                <option value="<?php echo $platform->getId()?>"> <?php echo $platform->getName() ?> </option>
+                                        <?php 
+                                            } 
+                                        ?>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label for="seriesDirectorId" class="form-label">Selecciona el director: </label>
+                                    <br>  
+                                    <select id="seriesDirectorId" name="seriesDirectorId" required>
+                                        <?php
+                                            $directorsList = listDirectors();
+                                            
+                                            foreach ($directorsList as $director) {
+                                        ?>
+                                                <option value="<?php echo $director->getId()?>"> <?php echo $director->getName() .' '. $director->getFirstSurname() .' '. $director->getSecondSurname() ?> </option>
+                                        <?php 
+                                            } 
+                                        ?>
+                                    </select>  
+                                    <br>
+                                    <br>
+                                    <label for="seriesActors[]" class="form-label">Selecciona los actores: </label>          
+                                    <br>
+                                    <?php
+                                        $actorsList = listActors();
+
+                                        foreach ($actorsList as $actor) {
+                                    ?>
+                                            <input type="checkbox" name="seriesActors[]" value="<?php echo $actor->getId() ?>"> <?php echo $actor->getName() .' '. $actor->getFirstSurname() .' '. $actor->getSecondSurname() ?>
+                                            <br>
+                                    <?php 
+                                        } 
+                                    ?>
+                                    <br>
+                                    <label for="seriesAudioLanguages[]" class="form-label">Selecciona los idiomas disponibles en AUDIO: </label> 
+                                    <br>
+                                    <?php
+                                        $languagesList = listLanguages();
+
+                                        foreach ($languagesList as $language) {
+                                    ?>
+                                            <input type="checkbox" name="seriesAudioLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <br>
+                                    <?php 
+                                        } 
+                                    ?>                                   
+                                    <br>
+                                    <label for="seriesSubtitlesLanguages[]" class="form-label">Selecciona los idiomas disponibles en SUBTITULOS: </label> 
+                                    <br>
+                                    <?php
+                                        foreach ($languagesList as $language) {
+                                    ?>
+                                            <input type="checkbox" name="seriesSubtitlesLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <br>
+                                    <?php 
+                                        } 
+                                    ?>                                   
+                                    <br>
                                 </div>
-                                <input type="submit" value="Editar" class="btn btn-primary" name="editBtn"/>
+                                <input type="submit" value="Crear" class="btn btn-primary" name="createBtn"/>
                             </form>
                         </div>
                     </div>
             <?php
                 } else {
-                    if ($actorEdited) {
+                    if ($seriesEdited) {
             ?>
                         <div class="row">
                             <div class="alert alert-success" role="alert">
-                                Actor editado correctamente.<br><a href="list.php">Volver al listado de actores.</a>
+                                Serie editada correctamente.<br><a href="list.php">Volver al listado de series.</a>
                             </div>
                         </div>
             <?php
@@ -68,7 +125,7 @@
             ?>
                         <div class="row">
                             <div class="alert alert-danger" role="alert">
-                                El actor no se ha editado correctamente.<br><a href="edit.php?id=<?php echo $idActor; ?>">Volver a intentarlo.</a>
+                                La serie no se ha editado correctamente.<br><a href="edit.php?id=<?php echo $idSeries; ?>">Volver a intentarlo.</a>
                             </div>
                         </div>
             <?php

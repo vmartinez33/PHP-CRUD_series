@@ -1,51 +1,82 @@
 <?php
     require_once('../../header.php');
-    require_once('../../controllers/DirectorController.php');
+    require_once('../../controllers/SeriesController.php');
 ?>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Listado de directores</h1>
+                    <h1>Listado de series</h1>
                 </div>
                 <div class="col-6">
-                    <a class="btn btn-primary" href="create.php">+ Crear directores</a>
+                    <a class="btn btn-primary" href="create.php">+ Crear serie</a>
                 </div>
                 <div class="col-12">
                     <?php
-                        $directorList = listDirectors();
+                        $seriesList = listSeries();
 
-                        if (count($directorList) > 0) {
+                        if (count($seriesList) > 0) {
                     ?>
                             <table class="table">
                                 <thead>
                                     <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Primer apellido</th>
-                                    <th>Segundo apellido</th>
-                                    <th>DNI</th>
-                                    <th>Fecha de nacimiento</th>
-                                    <th>Nacionalidad</th>
-                                    <th>Acciones</th>
+                                    <th>Titulo</th>
+                                    <th>Plataforma</th>
+                                    <th>Director</th>
+                                    <th>Actores</th>
+                                    <th>Idiomas AUDIO</th>
+                                    <th>Idiomas SUBTITULOS</th>
                                 </thead>
                                 <tbody>
                     <?php
-                                    foreach ($directorList as $director) {
+                                    foreach ($seriesList as $series) {
+                                        $platform = $series->getPlatform();
+                                        $director = $series->getDirector();
+                                        $actorsList = $series->getActors();
+                                        $audioLanguages = $series->getAudioLanguages();
+                                        $subtitlesLanguages = $series->getSubtitlesLanguages();
                     ?>
                                         <tr>
-                                            <td><?php echo $director->getId(); ?></td>
-                                            <td><?php echo $director->getName(); ?></td>
-                                            <td><?php echo $director->getFirstSurname(); ?></td>
-                                            <td><?php echo $director->getSecondSurname(); ?></td>
-                                            <td><?php echo $director->getDNI(); ?></td>
-                                            <td><?php echo $director->getBirthDate(); ?></td>
-                                            <td><?php echo $director->getNationality(); ?></td>
+                                            <td><?php echo $series->getId(); ?></td>
+                                            <td><?php echo $series->getTitle(); ?></td>
+                                            <td><?php echo $platform->getName(); ?></td>
+                                            <td><?php echo $director->getName() . " " . $director->getFirstSurname() . " " . $director->getSecondSurname(); ?></td>
+                                            <td>
+                                                <?php 
+                                                    foreach($actorsList as $actor) {
+                                                        echo $actor->getName() . " " . $actor->getFirstSurname() . " " . $actor->getSecondSurname();
+                                                ?>
+                                                    <br>
+                                                <?php 
+                                                    } 
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    foreach($audioLanguages as $language) {
+                                                        echo $language->getName();
+                                                ?>
+                                                    <br>
+                                                <?php 
+                                                    } 
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    foreach($subtitlesLanguages as $language) {
+                                                        echo $language->getName();
+                                                ?>
+                                                    <br>
+                                                <?php 
+                                                    } 
+                                                ?>
+                                            </td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a class="btn btn-success" href="edit.php?id=<?php echo $director->getId(); ?>">Editar</a>
+                                                    <a class="btn btn-success" href="edit.php?id=<?php echo $series->getId(); ?>">Editar</a>
 
-                                                    <form name="delete_director" action="delete.php" method="POST">
-                                                        <input type="hidden" name="directorId" value="<?php echo $director->getId(); ?>" />
+                                                    <form name="delete_series" action="delete.php" method="POST">
+                                                        <input type="hidden" name="seriesId" value="<?php echo $series->getId(); ?>" />
                                                         <button type="submit" class="btn btn-danger">Borrar</button>
                                                     </form>
                                                 </div>
@@ -60,7 +91,7 @@
                         } else {
                     ?>
                             <div class="alert alert-warning" role="alert">
-                                Aún no existen directores.
+                                Aún no existen series.
                             </div>
                     <?php
                         }

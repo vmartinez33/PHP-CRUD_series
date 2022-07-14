@@ -4,7 +4,7 @@
 
     function listActors() {
         $mysqli = initConnectionDb();
-        $actorList = $mysqli->query(query: "SELECT id, name, first_surname, second_surname, dni, DATE_FORMAT(birth_date, '%d/%m/%Y') as birth_date, nationality  FROM actors");
+        $actorList = $mysqli->query(query: "SELECT id, name, first_surname, second_surname, dni, DATE_FORMAT(birth_date, '%d/%m/%Y') as birth_date, nationality FROM actors");
 
         $actorObjectArray = [];
         foreach ($actorList as $actorItem) {
