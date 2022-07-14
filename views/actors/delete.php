@@ -13,23 +13,47 @@
         <div class="container">
             <?php
                 $idActor = $_POST['actorId'];
-                $actorDeleted = deleteActor($idActor);
+                $deleteConfirmed = false;
 
-                if ($actorDeleted) {
+                if (isset($_POST['confirmBtn'])) {
+                    $deleteConfirmed = true;
+                }
+
+                if ($deleteConfirmed) {
+                    $actorDeleted = deleteActor($idActor);
+                }
+                
+                if (!$deleteConfirmed) {
             ?>
-                    <div class="row">
-                        <div class="alert alert-success" role="alert">
-                            Actor borrado correctamente.<br><a href="list.php">Volver al listado de actores.</a>
-                        </div>
+                    <div class="alert alert-warning" role="alert">
+                        ¿Estás seguro de que quieres eliminar el registro?
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <form name="confirm_delete" action="" method="POST">
+                            <input type="submit" value="Confirmar" class="btn btn-success" name="confirmBtn"/>
+                        </form>                      
+                        <a class="btn btn-danger" href="list.php">Cancelar</a>                                           
                     </div>
             <?php
                 } else {
+                    if ($actorDeleted) {
             ?>
-                    <div class="row">
-                        <div class="alert alert-danger" role="alert">
-                            El actor no se ha borrado correctamente.<br><a href="list.php">Volver a intentarlo.</a>
+                        <div class="row">
+                            <div class="alert alert-success" role="alert">
+                                Actor borrado correctamente.<br><a href="list.php">Volver al listado de actores.</a>
+                            </div>
                         </div>
-                    </div>
+            <?php
+                    } else {
+            ?>
+                        <div class="row">
+                            <div class="alert alert-danger" role="alert">
+                                El actor no se ha borrado correctamente. Asegurese de que no pertenezca a ninguna serie.<br><a href="list.php">Volver a intentarlo.</a>
+                            </div>
+                        </div>
+            <?php
+                    }
+            ?>
             <?php
                 }
             ?>

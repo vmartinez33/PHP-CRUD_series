@@ -1,9 +1,11 @@
 <?php
     require_once('../../models/Actor.php');
-    require_once('../../utils/conexionBBDD.php');
+    require_once('../../utils/utils.php');
 
     function listActors() {
         $mysqli = initConnectionDb();
+
+
         $actorList = $mysqli->query(query: "SELECT id, name, first_surname, second_surname, dni, DATE_FORMAT(birth_date, '%d/%m/%Y') as birth_date, nationality FROM actors");
 
         $actorObjectArray = [];
@@ -20,7 +22,13 @@
         $mysqli = initConnectionDb();
 
         $actorCreated = false;
+
         //TODO: comprobar que no exista un actor con el mismo DNI.
+        $resultadoInsert = $mysqli->query(query: "SELECT * FROM actors WHERE dni = '$actorDNI'");
+        if ($resultadoInsert->num_rows > 0) {
+            return false;
+        } 
+
         if ($resultadoInsert = $mysqli->query(query: "INSERT INTO actors (name, first_surname, second_surname, dni, birth_date, nationality) values ('$actorName', '$actorFirstSurname', '$actorSecondSurname', '$actorDNI', STR_TO_DATE('$actorBirthDate', '%d/%m/%Y'), '$actorNationality')")) {
             $actorCreated = true;
         }   

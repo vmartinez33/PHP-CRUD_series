@@ -1,6 +1,6 @@
 <?php
     require_once('../../models/Director.php');
-    require_once('../../utils/conexionBBDD.php');
+    require_once('../../utils/utils.php');
 
     function listDirectors() {
         $mysqli = initConnectionDb();
@@ -20,10 +20,17 @@
         $mysqli = initConnectionDb();
 
         $directorCreated = false;
-        //TODO: comprobar que no exista un actor con el mismo DNI.
+        
+        //TODO: comprobar que no exista un director con el mismo DNI.                
+        $resultadoInsert = $mysqli->query(query: "SELECT * FROM directors WHERE dni = '$directorDNI'");
+        if ($resultadoInsert->num_rows > 0) {
+            return false;
+        } 
+
         if ($resultadoInsert = $mysqli->query(query: "INSERT INTO directors (name, first_surname, second_surname, dni, birth_date, nationality) values ('$directorName', '$directorFirstSurname', '$directorSecondSurname', '$directorDNI', STR_TO_DATE('$directorBirthDate', '%d/%m/%Y'), '$directorNationality')")) {
             $directorCreated = true;
-        }   
+        }  
+         
         $mysqli->close();
 
         return $directorCreated;

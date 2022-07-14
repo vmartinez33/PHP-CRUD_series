@@ -1,6 +1,6 @@
 <?php
     require_once('../../models/Platform.php');
-    require_once('../../utils/conexionBBDD.php');
+    require_once('../../utils/utils.php');
 
     function listPlatforms() {
         $mysqli = initConnectionDb();
@@ -20,7 +20,13 @@
         $mysqli = initConnectionDb();
 
         $platformCreated = false;
+
         //TODO: comprobar que no exista una plataforma con el mismo nombre
+        $resultadoInsert = $mysqli->query(query: "SELECT * FROM platforms WHERE name = '$platformName'");
+        if ($resultadoInsert->num_rows > 0) {
+            return false;
+        } 
+
         if ($resultadoInsert = $mysqli->query(query: "INSERT INTO platforms (name) values ('$platformName')")) {
             $platformCreated = true;
         }   

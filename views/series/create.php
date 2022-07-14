@@ -36,7 +36,7 @@
                                     <label for="seriesTitle" class="form-label">Título de la serie: </label>
                                     <input id="seriesTitle" name="seriesTitle" type="text" placeholder="Introduce el nombre de la serie" class="form-control" required />
                                     <br>
-                                    <label for="seriesPlatformName" class="form-label">Selecciona la plataforma: </label>
+                                    <label for="seriesPlatformId" class="form-label">Selecciona la plataforma: </label>
                                     <br>
                                     <select id="seriesPlatformId" name="seriesPlatformId" required>
                                         <?php
@@ -59,7 +59,7 @@
                                             
                                             foreach ($directorsList as $director) {
                                         ?>
-                                                <option value="<?php echo $director->getId()?>"> <?php echo $director->getName() .' '. $director->getFirstSurname() .' '. $director->getSecondSurname() ?> </option>
+                                                <option value="<?php echo $director->getId()?>"> <?php echo $director->getName() .' '. $director->getFirstSurname() .' '. $director->getSecondSurname() . " (" . $director->getDNI() . ")" ?> </option>
                                         <?php 
                                             } 
                                         ?>
@@ -73,7 +73,7 @@
 
                                         foreach ($actorsList as $actor) {
                                     ?>
-                                            <input type="checkbox" name="seriesActors[]" value="<?php echo $actor->getId() ?>"> <?php echo $actor->getName() .' '. $actor->getFirstSurname() .' '. $actor->getSecondSurname() ?>
+                                            <input type="checkbox" name="seriesActors[]" value="<?php echo $actor->getId() ?>"> <?php echo $actor->getName() .' '. $actor->getFirstSurname() .' '. $actor->getSecondSurname() . " (" . $actor->getDNI() . ")" ?>
                                             <br>
                                     <?php 
                                         } 
@@ -86,7 +86,7 @@
 
                                         foreach ($languagesList as $language) {
                                     ?>
-                                            <input type="checkbox" name="seriesAudioLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <input type="checkbox" name="seriesAudioLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() . " (" . $language->getISO() . ")" ?>
                                             <br>
                                     <?php 
                                         } 
@@ -97,7 +97,7 @@
                                     <?php
                                         foreach ($languagesList as $language) {
                                     ?>
-                                            <input type="checkbox" name="seriesSubtitlesLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <input type="checkbox" name="seriesSubtitlesLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() . " (" . $language->getISO() . ")" ?>
                                             <br>
                                     <?php 
                                         } 

@@ -1,6 +1,6 @@
 <?php
     require_once('../../models/Language.php');
-    require_once('../../utils/conexionBBDD.php');
+    require_once('../../utils/utils.php');
 
     function listLanguages() {
         $mysqli = initConnectionDb();
@@ -20,7 +20,13 @@
         $mysqli = initConnectionDb();
 
         $languageCreated = false;
+
         //TODO: comprobar que no exista un idioma con el mismo ISO code.
+        $resultadoInsert = $mysqli->query(query: "SELECT * FROM languages WHERE iso_code = '$languageISO'");
+        if ($resultadoInsert->num_rows > 0) {
+            return false;
+        } 
+
         if ($resultadoInsert = $mysqli->query(query: "INSERT INTO languages (name, iso_code) values ('$languageName', '$languageISO')")) {
             $languageCreated = true;
         }   

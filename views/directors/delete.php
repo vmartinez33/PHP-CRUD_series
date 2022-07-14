@@ -1,6 +1,6 @@
 <?php
     require_once('../../header.php');
-    require_once('../controllers/DirectorController.php');
+    require_once('../../controllers/DirectorController.php');
 ?>
 <!DOCTYPE html>
     <body>
@@ -21,7 +21,7 @@
             ?>
                     <div class="row">
                         <div class="alert alert-danger" role="alert">
-                            El director no se ha borrado correctamente.<br><a href="list.php">Volver a intentarlo.</a>
+                            El director no se ha borrado correctamente. Asegurese de que no pertenezca a ninguna serie.<br><a href="list.php">Volver a intentarlo.</a>
                         </div>
                     </div>
             <?php

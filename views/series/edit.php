@@ -23,7 +23,9 @@
                 if($sendData) {
                     $condition = isset($_POST['seriesTitle']) && isset($_POST['seriesPlatformId']) && isset($_POST['seriesDirectorId']) && isset($_POST['seriesActors']) && isset($_POST['seriesAudioLanguages']) && isset($_POST['seriesSubtitlesLanguages']);
                     if($condition) {
-                        $seriesEdited = true;
+                        $seriesEdited = updateSeries($_POST['seriesId'], $_POST['seriesTitle'], $_POST['seriesPlatformId'], 
+                                                     $_POST['seriesDirectorId'], $_POST['seriesActors'], $_POST['seriesAudioLanguages'], 
+                                                     $_POST['seriesSubtitlesLanguages']);
                     }
                 }
 
@@ -37,17 +39,17 @@
                         <form name="create_series" action="" method="POST">
                                 <div class="nb-3">
                                     <label for="seriesTitle" class="form-label">Título de la serie: </label>
-                                    <input id="seriesTitle" name="seriesTitle" type="text" placeholder="Introduce el nombre de la serie" class="form-control" required />
+                                    <input id="seriesTitle" name="seriesTitle" type="text" placeholder="Introduce el nombre de la serie" class="form-control" required value="<?php echo $seriesObject->getTitle(); ?>"/>
                                     <br>
-                                    <label for="seriesPlatformName" class="form-label">Selecciona la plataforma: </label>
+                                    <label for="seriesPlatformId" class="form-label">Selecciona la plataforma: </label>
                                     <br>
-                                    <select id="seriesPlatformId" name="seriesPlatformId" required>
+                                    <select id="seriesPlatformId" name="seriesPlatformId" required >
                                         <?php
                                             $platformsList = listPlatforms();
                                             
                                             foreach ($platformsList as $platform) {
                                         ?>
-                                                <option value="<?php echo $platform->getId()?>"> <?php echo $platform->getName() ?> </option>
+                                                <option value="<?php echo $platform->getId()?>" <?php if ($platform->getId() == $seriesObject->getPlatform()->getId()) {echo "selected";} ?> > <?php echo $platform->getName() ?> </option>
                                         <?php 
                                             } 
                                         ?>
@@ -62,7 +64,7 @@
                                             
                                             foreach ($directorsList as $director) {
                                         ?>
-                                                <option value="<?php echo $director->getId()?>"> <?php echo $director->getName() .' '. $director->getFirstSurname() .' '. $director->getSecondSurname() ?> </option>
+                                                <option value="<?php echo $director->getId()?>" <?php if ($director->getId() == $seriesObject->getDirector()->getId()) {echo "selected";} ?> > <?php echo $director->getName() .' '. $director->getFirstSurname() .' '. $director->getSecondSurname() . " (" . $director->getDNI() . ")" ?> </option>
                                         <?php 
                                             } 
                                         ?>
@@ -76,7 +78,14 @@
 
                                         foreach ($actorsList as $actor) {
                                     ?>
-                                            <input type="checkbox" name="seriesActors[]" value="<?php echo $actor->getId() ?>"> <?php echo $actor->getName() .' '. $actor->getFirstSurname() .' '. $actor->getSecondSurname() ?>
+                                            <input type="checkbox" name="seriesActors[]" value="<?php echo $actor->getId() ?>" 
+                                            <?php foreach ($seriesObject->getActors() as $actorObject) { 
+                                                    if ($actor->getId() == $actorObject->getId()) { 
+                                                        echo "checked"; 
+                                                        break;
+                                                    } 
+                                                } ?> > 
+                                            <?php echo $actor->getName() .' '. $actor->getFirstSurname() .' '. $actor->getSecondSurname() . " (" . $actor->getDNI() . ")" ?>
                                             <br>
                                     <?php 
                                         } 
@@ -89,7 +98,14 @@
 
                                         foreach ($languagesList as $language) {
                                     ?>
-                                            <input type="checkbox" name="seriesAudioLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <input type="checkbox" name="seriesAudioLanguages[]" value="<?php echo $language->getId() ?>"
+                                            <?php foreach ($seriesObject->getAudioLanguages() as $languageObject) { 
+                                                    if ($language->getId() == $languageObject->getId()) { 
+                                                        echo "checked"; 
+                                                        break;
+                                                    } 
+                                                } ?> >
+                                            <?php echo $language->getName() . " (" . $language->getISO() . ")" ?>
                                             <br>
                                     <?php 
                                         } 
@@ -100,14 +116,22 @@
                                     <?php
                                         foreach ($languagesList as $language) {
                                     ?>
-                                            <input type="checkbox" name="seriesSubtitlesLanguages[]" value="<?php echo $language->getId() ?>"> <?php echo $language->getName() ?>
+                                            <input type="checkbox" name="seriesSubtitlesLanguages[]" value="<?php echo $language->getId() ?>" 
+                                            <?php foreach ($seriesObject->getSubtitlesLanguages() as $languageObject) { 
+                                                    if ($language->getId() == $languageObject->getId()) { 
+                                                        echo "checked"; 
+                                                        break;
+                                                    } 
+                                                } ?> >
+                                            <?php echo $language->getName() . " (" . $language->getISO() . ")" ?>
                                             <br>
                                     <?php 
                                         } 
                                     ?>                                   
                                     <br>
                                 </div>
-                                <input type="submit" value="Crear" class="btn btn-primary" name="createBtn"/>
+                                <input type="hidden" name="seriesId" value="<?php echo $idSeries; ?>"/>
+                                <input type="submit" value="Editar" class="btn btn-primary" name="editBtn"/>
                             </form>
                         </div>
                     </div>

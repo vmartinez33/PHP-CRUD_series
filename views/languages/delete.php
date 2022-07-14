@@ -27,7 +27,7 @@
             ?>
                     <div class="row">
                         <div class="alert alert-danger" role="alert">
-                            El idioma no se ha borrado correctamente.<br><a href="list.php">Volver a intentarlo.</a>
+                            El idioma no se ha borrado correctamente. Asegurese de que no pertenezca a ninguna serie.<br><a href="list.php">Volver a intentarlo.</a>
                         </div>
                     </div>
             <?php

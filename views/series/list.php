@@ -40,11 +40,11 @@
                                             <td><?php echo $series->getId(); ?></td>
                                             <td><?php echo $series->getTitle(); ?></td>
                                             <td><?php echo $platform->getName(); ?></td>
-                                            <td><?php echo $director->getName() . " " . $director->getFirstSurname() . " " . $director->getSecondSurname(); ?></td>
+                                            <td><?php echo $director->getName() . " " . $director->getFirstSurname() . " " . $director->getSecondSurname() . " (" . $director->getDNI() . ")"; ?></td>
                                             <td>
                                                 <?php 
                                                     foreach($actorsList as $actor) {
-                                                        echo $actor->getName() . " " . $actor->getFirstSurname() . " " . $actor->getSecondSurname();
+                                                        echo $actor->getName() . " " . $actor->getFirstSurname() . " " . $actor->getSecondSurname() . " (" . $actor->getDNI() . ")";
                                                 ?>
                                                     <br>
                                                 <?php 
@@ -54,7 +54,7 @@
                                             <td>
                                                 <?php 
                                                     foreach($audioLanguages as $language) {
-                                                        echo $language->getName();
+                                                        echo $language->getName() . " (" . $language->getISO() . ")";
                                                 ?>
                                                     <br>
                                                 <?php 
@@ -64,7 +64,7 @@
                                             <td>
                                                 <?php 
                                                     foreach($subtitlesLanguages as $language) {
-                                                        echo $language->getName();
+                                                        echo $language->getName() . " (" . $language->getISO() . ")";
                                                 ?>
                                                     <br>
                                                 <?php 

@@ -22,9 +22,7 @@
                 if(!$sendData) {
             ?>
                     <div class="row">
-                        <div style="text-align: center;">
                             <h1>Crear plataforma</h1>
-                        </div>
                         <div class="col-12">
                             <form name="create_platform" action="" method="POST">
                                 <div class="nb-3">
@@ -32,9 +30,7 @@
                                     <input id="platformName" name="platformName" type="text" placeholder="Introduce el nombre de la plataforma" class="form-control" required />
                                 </div>
                                 <br>
-                                <div style="text-align: center;">
                                 <input type="submit" value="Crear" class="btn btn-primary" name="createBtn"/>
-                                </div>
                             </form>
                         </div>
                     </div>
