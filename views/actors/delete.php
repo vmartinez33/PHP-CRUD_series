@@ -31,6 +31,7 @@
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <form name="confirm_delete" action="" method="POST">
                             <input type="submit" value="Confirmar" class="btn btn-success" name="confirmBtn"/>
+                            <input type="hidden" name="actorId" value="<?php echo $idActor; ?>"/>
                         </form>                      
                         <a class="btn btn-danger" href="list.php">Cancelar</a>                                           
                     </div>
